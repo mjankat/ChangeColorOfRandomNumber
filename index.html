@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Array Yazdır ve Random Renk Değiştir</title>
+    <style>
+        .number {
+            display: inline-block;
+            width: 30px;
+            text-align: center;
+            margin: 2px;
+        }
+        span{
+            display: inline-block;
+            width: 30px;
+            text-align: center;
+            margin: 2px;
+        }
+        .selected {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <p>1'den 99'a kadar olan sayıları for döngüsü ile yanyana <button id="sirala" onclick="siralaClicked()">Sırala</button></p>
+
+    <div>
+        <button disabled id="rastgeleSayiButton" onclick="rastgeleSayiSec()">Rastgele Sayı Seç</button>
+    </div>
+    <div id="output">
+
+    </div>
+
+
+    <script>
+        let selectedNumbers = new Set();
+        let sayiArray = [];
+
+        function siralaClicked() {
+            document.getElementById("sirala").disabled = true;
+            document.getElementById("rastgeleSayiButton").disabled = false;
+            for (let i = 1; i <= 99; i++) {
+                sayiArray.push(i);
+            }
+            arrayYazdir();
+        }
+
+        function arrayYazdir() {
+            document.getElementById("output").innerHTML = "";
+            for (let i = 1; i <= 99; i++) {
+                let span = document.createElement("span");
+                span.className = "number";
+                span.innerHTML = i;
+                document.getElementById("output").appendChild(span);
+                if (i % 10 === 0) {
+                    document.getElementById("output").innerHTML += "<br>";
+                }
+            }
+        }
+
+        function rastgeleSayiSec() {
+            const allNumbers = document.getElementsByClassName("number");
+
+            if (allNumbers.length === 0) {
+                alert("Tüm sayılar seçildi!");
+                return;
+            }
+
+            const randomIndex = Math.floor(Math.random() * allNumbers.length);
+            const selectedNumber = allNumbers[randomIndex];
+            selectedNumber.classList.add("selected");
+            selectedNumbers.add(selectedNumber.innerHTML);
+
+            // Remove the selected number from the array
+            selectedNumber.classList.remove("number");
+        }
+    </script>
+</body>
+</html>
